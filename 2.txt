@@ -1,0 +1,52 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema Instituto
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema Instituto
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Instituto` DEFAULT CHARACTER SET utf8 ;
+USE `Instituto` ;
+
+-- -----------------------------------------------------
+-- Table `Instituto`.`Profesor`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Instituto`.`Profesor` (
+  `idProfesor` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Apellido` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idProfesor`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Instituto`.`Estudiantes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Instituto`.`Estudiantes` (
+  `idEstudiantes` INT NOT NULL AUTO_INCREMENT,
+  `Nombre` VARCHAR(45) NOT NULL,
+  `Apellido` VARCHAR(45) NOT NULL,
+  `DNI` VARCHAR(45) NOT NULL,
+  `Fecha` DATE NOT NULL,
+  `Nota` DECIMAL(2,2) NOT NULL,
+  `Profesor_idProfesor` INT NOT NULL,
+  PRIMARY KEY (`idEstudiantes`, `Profesor_idProfesor`),
+  UNIQUE INDEX `DNI_UNIQUE` (`DNI` ASC) ,
+  INDEX `fk_Estudiantes_Profesor_idx` (`Profesor_idProfesor` ASC) ,
+  CONSTRAINT `fk_Estudiantes_Profesor`
+    FOREIGN KEY (`Profesor_idProfesor`)
+    REFERENCES `Instituto`.`Profesor` (`idProfesor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
